@@ -80,6 +80,7 @@ export default {
   methods: {
     handleRestore(row) {
       this.$axios.$post(`http://localhost:3333/pages/${row.id}/restore`)
+      this.tableData = this.tableData.filter((page) => page.id !== row.id)
     },
 
     handleDelete(row) { 
