@@ -62,7 +62,8 @@ export default {
   },
   methods: {
     async addPage() {
-      await this.$axios.$post()
+      await this.$axios.$post(`http://localhost:3333/pages`, this.form)
+      await this.$router.push('/')
     }
   }
 
