@@ -6,21 +6,29 @@
     <el-table-column label="ID" prop="id"> </el-table-column>
     <el-table-column label="Pagina" prop="page_name"> </el-table-column>
     <el-table-column label="Tipo de contenido" prop="type_content"> </el-table-column>
-    <el-table-column label="Creado en" prop="created_at"> </el-table-column>
+    <el-table-column v-if="type === 'available'" label="Creado en" prop="created_at"> </el-table-column>
+    <el-table-column v-if="type === 'deleted'" label="Eliminado en" prop="deleted_at"> </el-table-column>
     <el-table-column align="right">
       <template #header>
         <el-input v-model="search" size="mini" placeholder="Escribe para buscar" />
       </template>
       <template slot-scope="scope">
-        <el-button size="mini" @click="handleEdit(scope.$index, scope.row)"
-          >Editar</el-button
-        >
         <el-button
+          v-if="type === 'available'"
           size="mini"
           type="danger"
-          @click="handleDelete(scope.$index, scope.row)"
-          >Borrar</el-button
-        >
+          @click="handleDelete(scope.row)"
+          >
+          Borrar
+          </el-button>
+        <el-button
+          v-if="type === 'deleted'"
+          size="mini"
+          type="warning"
+          @click="handleRestore(scope.row)"
+          >
+          Restaurar
+          </el-button>
       </template>
     </el-table-column>
   </el-table>
@@ -31,6 +39,12 @@ import moment from 'moment'
 
 export default {
   name: 'Table',
+  props: {
+    type: {
+      type: String,
+      default: 'available'
+    }
+  },
   data() {
     return {
       tableData: [],
@@ -46,20 +60,28 @@ export default {
     }
   },
   mounted() {
-    this.getPages()
+    if (this.type === 'available') {
+      this.getPages()
+    } else {
+      this.getDeletedPages()
+    }
   },
   methods: {
-    handleEdit(index, row) {
-      console.log(index, row)
+    handleRestore(row) {
+      this.$axios.$post(`http://localhost:3333/pages/${row.id}/restore`)
     },
 
-    handleDelete(index, row) { 
-      alert(this.tableData.id)
-      this.$axios.$delete(`http://localhost:3333/pages/${(index, row)}`)
+    handleDelete(row) { 
+      this.$axios.$delete(`http://localhost:3333/pages/${row.id}`)
     },
 
     async getPages() {
       this.tableData = await this.$axios.$get(`http://localhost:3333/pages`)
+      this.tableData.createdAt = moment(this.tableData.createdAt, 'dd.MM.yyyy')
+    },
+
+    async getDeletedPages() {
+      this.tableData = await this.$axios.$get(`http://localhost:3333/pages/deleted`)
       this.tableData.createdAt = moment(this.tableData.createdAt, 'dd.MM.yyyy')
     }
 
