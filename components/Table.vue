@@ -88,12 +88,12 @@ export default {
 
     async getPages() {
       this.tableData = await this.$axios.$get(`http://localhost:3333/pages`)
-      this.tableData.createdAt = moment(this.tableData.createdAt, 'dd.MM.yyyy')
+      this.tableData.createdAt = moment.unix(this.tableData.createdAt).format('dd.MM.yyyy')
     },
 
     async getDeletedPages() {
       this.tableData = await this.$axios.$get(`http://localhost:3333/pages/deleted`)
-      this.tableData.createdAt = moment(this.tableData.createdAt, 'dd.MM.yyyy')
+      this.tableData.deletedAt = moment.unix(this.tableData.deletedAt).format('dd.MM.yyyy')
     }
 
 
@@ -103,7 +103,7 @@ export default {
 
 <style>
 .el-button-center {
-  margin-top: 50px !important;
+  margin-top: 25px !important;
   margin: 0 auto;
   display: block;
 }
