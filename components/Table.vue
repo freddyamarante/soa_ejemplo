@@ -39,7 +39,7 @@
         class="el-button-center"
         icon="el-icon-plus"
         circle
-        @click="$router.push('')"
+        @click="$router.push('/addpage')"
       >
       </el-button>
     </div>

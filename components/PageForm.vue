@@ -15,14 +15,14 @@
             <i class="el-icon-postcard"></i>
             Nombre de la pagina
           </template>
-          <el-input v-model="form.title" clearable> </el-input>
+          <el-input v-model="form.typeContent" clearable> </el-input>
         </el-descriptions-item>
         <el-descriptions-item :span="3">
           <template slot="label">
             <i class="el-icon-user"></i>
             Tipo de pagina
           </template>
-          <el-select v-model="form.contactId" placeholder="Selecciona"  clearable>
+          <el-select v-model="form.type" placeholder="Selecciona"  clearable>
             <el-option
               v-for="item in options"
               :key="item.value"
@@ -46,6 +46,9 @@ export default {
   name: 'PageForm',
   data() {
     return {
+      form: {
+
+      },
       options: [{
         value: 'text',
         label: 'Pagina normal'
@@ -55,7 +58,8 @@ export default {
       }],
       value: ''
     }
-  }
+  },
+
 }
 </script>
 
