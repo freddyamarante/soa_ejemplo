@@ -15,14 +15,14 @@
             <i class="el-icon-postcard"></i>
             Nombre de la pagina
           </template>
-          <el-input v-model="form.typeContent" clearable> </el-input>
+          <el-input v-model="form.pageName" clearable> </el-input>
         </el-descriptions-item>
         <el-descriptions-item :span="3">
           <template slot="label">
             <i class="el-icon-user"></i>
             Tipo de pagina
           </template>
-          <el-select v-model="form.type" placeholder="Selecciona"  clearable>
+          <el-select v-model="form.typeContent" placeholder="Selecciona"  clearable>
             <el-option
               v-for="item in options"
               :key="item.value"
@@ -34,7 +34,7 @@
         </el-descriptions-item>
       </el-descriptions>
       <el-form-item>
-            <el-button v-if="type === 'create'" type="warning"
+            <el-button v-if="type === 'create'" type="warning" @click="addPage()"
               >Añadir Pagina</el-button>
           </el-form-item>
       </el-form>
@@ -47,7 +47,8 @@ export default {
   data() {
     return {
       form: {
-
+        pageName: '',
+        typeContent: ''
       },
       options: [{
         value: 'text',
@@ -59,6 +60,13 @@ export default {
       value: ''
     }
   },
+  methods: {
+    async addPage() {
+      await this.$axios.$post()
+    }
+  }
+
+
 
 }
 </script>
