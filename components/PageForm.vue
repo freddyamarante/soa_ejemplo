@@ -34,7 +34,7 @@
         </el-descriptions-item>
       </el-descriptions>
       <el-form-item>
-            <el-button v-if="type === 'create'" type="warning" @click="addPage()"
+            <el-button type="warning" @click="addPage()"
               >Añadir Pagina</el-button>
           </el-form-item>
       </el-form>
@@ -81,7 +81,7 @@ export default {
 }
 
 .el-button {
-  margin-top: 10px;
+  margin-top: 20px;
   height: 40;
 }
 
