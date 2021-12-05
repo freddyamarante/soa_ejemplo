@@ -31,6 +31,12 @@
           </el-button>
       </template>
     </el-table-column>
+    <el-button
+      v-if="type === available"
+      type="info"
+      icon="el-icon-plus"
+    >
+    </el-button>
   </el-table>
 </template>
 
