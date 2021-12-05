@@ -2,6 +2,7 @@
 <div>
     <el-table
       :data="data"
+      empty-text="No hay paginas"
       style="width: 100%"
     >
       <el-table-column label="ID" prop="id"> </el-table-column>
@@ -29,6 +30,14 @@
             @click="handleRestore(scope.row)"
             >
             Restaurar
+            </el-button>
+            <el-button
+            v-if="type === 'deleted'"
+            size="mini"
+            type="danger"
+            @click="handlePermanentDelete(scope.row)"
+            >
+            Eliminar Permanentemente
             </el-button>
         </template>
       </el-table-column>
@@ -88,6 +97,11 @@ export default {
       this.tableData = this.tableData.filter((page) => page.id !== row.id)
     },
 
+    handlePermanentDelete(row) {
+      this.$axios.$delete(`http://localhost:3333/pages/permanent/${row.id}`)
+      this.tableData = this.tableData.filter((page) => page.id !== row.id)
+    },
+
     async getPages() {
       this.tableData = await this.$axios.$get(`http://localhost:3333/pages`)
       this.tableData.createdAt = moment.unix(this.tableData.createdAt).format('dd.MM.yyyy')
@@ -97,7 +111,6 @@ export default {
       this.tableData = await this.$axios.$get(`http://localhost:3333/pages/deleted`)
       this.tableData.deletedAt = moment.unix(this.tableData.deletedAt).format('dd.MM.yyyy')
     }
-
 
   }
 }
