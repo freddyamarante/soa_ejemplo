@@ -84,6 +84,7 @@ export default {
 
     handleDelete(row) { 
       this.$axios.$delete(`http://localhost:3333/pages/${row.id}`)
+      this.tableData = this.tableData.filter((page) => page.id !== row.id)
     },
 
     async getPages() {
@@ -97,7 +98,7 @@ export default {
     }
 
 
-  },
+  }
 }
 </script>
 
