@@ -234,18 +234,18 @@ export default {
       const response = await notion.pages.create(albumData)
       console.log(response)
 
-      // const config = {
-      //   method: 'post',
-      //   url: "https://api.notion.com/v1/pages",
-      //   headers: {
-      //     'Authorization': 'Bearer secret_mtVR9yF1WxuaVYOfLbCZtFxPk9U9bYdiGMxrMf3Ruhc',
-      //     'Content-Type': 'application/json',
-      //     'Notion-Version': '2021-05-13'
-      //   },
-      //   data: albumData
-      // }
+      const config = {
+        method: 'post',
+        url: "https://api.notion.com/v1/pages",
+        headers: {
+          'Authorization': 'Bearer secret_mtVR9yF1WxuaVYOfLbCZtFxPk9U9bYdiGMxrMf3Ruhc',
+          'Content-Type': 'application/json',
+          'Notion-Version': '2021-05-13'
+        },
+        data: albumData
+      }
 
-
+      console.log(config)
     }
   }
 }
