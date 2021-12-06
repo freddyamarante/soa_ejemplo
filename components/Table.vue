@@ -1,7 +1,7 @@
 <template>
 <div>
     <el-table
-      :data="data"
+      :data="tableData.filter(data => !search || data.page_name.toLowerCase().includes(search.toLowerCase()))"
       empty-text="No hay paginas"
       style="width: 100%"
     >
@@ -73,14 +73,6 @@ export default {
       search: '',
     }
   },
-  computed: {
-    data() {
-      return (this.tableData.filter(
-        (data) =>
-          !this.name_page || data.text.toLowerCase().includes(this.search.toLowerCase())
-      ))
-    }
-  },
   mounted() {
     if (this.type === 'available') {
       this.getPages()
@@ -95,8 +87,8 @@ export default {
     },
 
     handleDelete(row) { 
-      this.$axios.$delete(`http://localhost:3333/pages/${row.id}`)
-      this.tableData = this.tableData.filter((page) => page.id !== row.id)
+        this.$axios.$delete(`http://localhost:3333/pages/${row.id}`)
+        this.tableData = this.tableData.filter((page) => page.id !== row.id) 
     },
 
     handlePermanentDelete(row) {
