@@ -6,8 +6,18 @@
     text-color="#00000"
     active-text-color="#00000"
     >
-    <el-menu-item  index="/" @click="$router.push('/')">Inicio</el-menu-item>
-    <el-menu-item  index="/deleted" @click="$router.push('/deleted')">Borrados</el-menu-item>
+    <el-menu-item  index="/" @click="$router.push('/')">
+      <template>
+        <i class="el-icon-s-home"></i>
+        Inicio
+      </template>
+    </el-menu-item>
+    <el-menu-item  index="/deleted" @click="$router.push('/deleted')">
+      <template>
+        <i class="el-icon-delete-solid"></i>
+        Papelera
+      </template>
+    </el-menu-item>
   </el-menu>
 </template>
 
