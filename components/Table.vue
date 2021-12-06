@@ -1,18 +1,39 @@
 <template>
-<div>
+  <div>
     <el-table
-      :data="tableData.filter(data => !search || data.page_name.toLowerCase().includes(search.toLowerCase()))"
+      :data="
+        tableData.filter(
+          (data) =>
+            !search ||
+            data.page_name.toLowerCase().includes(search.toLowerCase())
+        )
+      "
       empty-text="No hay paginas"
       style="width: 100%"
     >
       <el-table-column label="ID" prop="id"> </el-table-column>
       <el-table-column label="Pagina" prop="page_name"> </el-table-column>
-      <el-table-column label="Tipo de contenido" prop="type_content"> </el-table-column>
-      <el-table-column v-if="type === 'available'" label="Creado en" prop="created_at"> </el-table-column>
-      <el-table-column v-if="type === 'deleted'" label="Eliminado en" prop="deleted_at"> </el-table-column>
+      <el-table-column label="Tipo de contenido" prop="type_content">
+      </el-table-column>
+      <el-table-column
+        v-if="type === 'available'"
+        label="Creado en"
+        prop="created_at"
+      >
+      </el-table-column>
+      <el-table-column
+        v-if="type === 'deleted'"
+        label="Eliminado en"
+        prop="deleted_at"
+      >
+      </el-table-column>
       <el-table-column align="right">
         <template #header>
-          <el-input v-model="search" size="mini" placeholder="Escribe para buscar" />
+          <el-input
+            v-model="search"
+            size="mini"
+            placeholder="Escribe para buscar"
+          />
         </template>
         <template slot-scope="scope">
           <el-button
@@ -22,8 +43,8 @@
             type="danger"
             circle
             @click="handleDelete(scope.row)"
-            >
-            </el-button>
+          >
+          </el-button>
           <el-button
             v-if="type === 'deleted'"
             icon="el-icon-back"
@@ -31,29 +52,29 @@
             type="warning"
             circle
             @click="handleRestore(scope.row)"
-            >
-            </el-button>
-            <el-button
+          >
+          </el-button>
+          <el-button
             v-if="type === 'deleted'"
             icon="el-icon-delete-solid"
             size="medium"
             circle
             @click="handlePermanentDelete(scope.row)"
-            >
-            </el-button>
+          >
+          </el-button>
         </template>
       </el-table-column>
     </el-table>
     <el-button
-        v-if="type === 'available'"
-        type="info"
-        class="el-button-center"
-        icon="el-icon-plus"
-        circle
-        @click="$router.push('/addpage')"
-      >
-      </el-button>
-    </div>
+      v-if="type === 'available'"
+      type="info"
+      class="el-button-center"
+      icon="el-icon-plus"
+      circle
+      @click="$router.push('/addpage')"
+    >
+    </el-button>
+  </div>
 </template>
 
 <script>
@@ -64,8 +85,8 @@ export default {
   props: {
     type: {
       type: String,
-      default: 'available'
-    }
+      default: 'available',
+    },
   },
   data() {
     return {
@@ -82,12 +103,17 @@ export default {
   },
   methods: {
     handleRestore(row) {
-      this.$confirm('¿Estás seguro que deseas restaurar esta página?', 'Warning', {
-        confirmButtonText: 'Si',
-        cancelButtonText: 'No',
-        type: 'warning',
-      }).then(() => {
-        this.$axios.$post(`http://localhost:3333/pages/${row.id}/restore`)
+      this.$confirm(
+        '¿Estás seguro que deseas restaurar esta página?',
+        'Warning',
+        {
+          confirmButtonText: 'Si',
+          cancelButtonText: 'No',
+          type: 'warning',
+        }
+      ).then(() => {
+        this.$axios
+          .$post(`http://localhost:3333/pages/${row.id}/restore`)
           .then(() => {
             this.$message({
               type: 'success',
@@ -98,9 +124,26 @@ export default {
       })
     },
 
-    handleDelete(row) { 
-        this.$axios.$delete(`http://localhost:3333/pages/${row.id}`)
-        this.tableData = this.tableData.filter((page) => page.id !== row.id) 
+    handleDelete(row) {
+      this.$confirm(
+        '¿Estás seguro que deseas eliminar esta página?',
+        'Warning',
+        {
+          confirmButtonText: 'Si',
+          cancelButtonText: 'No',
+          type: 'warning',
+        }
+      ).then(() => {
+        this.$axios
+          .$delete(`http://localhost:3333/pages/${row.id}`)
+          .then(() => {
+            this.$message({
+              type: 'success',
+              message: 'Se ha eliminado correctamente',
+            })
+            this.tableData = this.tableData.filter((page) => page.id !== row.id)
+          })
+      })
     },
 
     handlePermanentDelete(row) {
@@ -110,14 +153,20 @@ export default {
 
     async getPages() {
       this.tableData = await this.$axios.$get(`http://localhost:3333/pages`)
-      this.tableData.createdAt = moment.unix(this.tableData.createdAt).format('dd.MM.yyyy')
+      this.tableData.createdAt = moment
+        .unix(this.tableData.createdAt)
+        .format('dd.MM.yyyy')
     },
 
     async getDeletedPages() {
-      this.tableData = await this.$axios.$get(`http://localhost:3333/pages/deleted`)
-      this.tableData.deletedAt = moment.unix(this.tableData.deletedAt).format('dd.MM.yyyy')
-    }
-  }
+      this.tableData = await this.$axios.$get(
+        `http://localhost:3333/pages/deleted`
+      )
+      this.tableData.deletedAt = moment
+        .unix(this.tableData.deletedAt)
+        .format('dd.MM.yyyy')
+    },
+  },
 }
 </script>
 
@@ -130,7 +179,5 @@ export default {
 
 .el-button {
   margin: auto;
-
 }
- 
 </style>
