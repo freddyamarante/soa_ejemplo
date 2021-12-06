@@ -1,5 +1,11 @@
 <template>
   <div>
+    <h1 v-if="type === 'available'">
+      Páginas en el presente workspace
+    </h1>
+    <h1 v-if="type === 'deleted'">
+      Páginas eliminadas
+    </h1>
     <el-table
       :data="
         tableData.filter(
