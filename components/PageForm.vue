@@ -19,6 +19,13 @@
         </el-descriptions-item>
         <el-descriptions-item :span="3">
           <template slot="label">
+            <i class="el-icon-postcard"></i>
+            Icono
+          </template>
+          <el-input v-model="form.icon" clearable> </el-input>
+        </el-descriptions-item>
+        <el-descriptions-item :span="3">
+          <template slot="label">
             <i class="el-icon-user"></i>
             Tipo de pagina
           </template>
@@ -48,6 +55,7 @@ export default {
     return {
       form: {
         pageName: '',
+        icon: '',
         typeContent: ''
       },
       options: [{
