@@ -1,5 +1,6 @@
 <template>
   <div>
+    <AlbumForm />
   </div>
 </template>
 
