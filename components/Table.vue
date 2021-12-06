@@ -82,8 +82,20 @@ export default {
   },
   methods: {
     handleRestore(row) {
-      this.$axios.$post(`http://localhost:3333/pages/${row.id}/restore`)
-      this.tableData = this.tableData.filter((page) => page.id !== row.id)
+      this.$confirm('¿Estás seguro que deseas restaurar esta página?', 'Warning', {
+        confirmButtonText: 'Si',
+        cancelButtonText: 'No',
+        type: 'warning',
+      }).then(() => {
+        this.$axios.$post(`http://localhost:3333/pages/${row.id}/restore`)
+          .then(() => {
+            this.$message({
+              type: 'success',
+              message: 'Se ha restaurado correctamente',
+            })
+            this.tableData = this.tableData.filter((page) => page.id !== row.id)
+          })
+      })
     },
 
     handleDelete(row) { 
