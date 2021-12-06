@@ -147,8 +147,25 @@ export default {
     },
 
     handlePermanentDelete(row) {
-      this.$axios.$delete(`http://localhost:3333/pages/permanent/${row.id}`)
-      this.tableData = this.tableData.filter((page) => page.id !== row.id)
+      this.$confirm(
+        '¿Estás seguro que deseas eliminar esta página?',
+        'Warning',
+        {
+          confirmButtonText: 'Si',
+          cancelButtonText: 'No',
+          type: 'error',
+        }
+      ).then(() => {
+        this.$axios.$delete(`http://localhost:3333/pages/permanent/${row.id}`)
+          .$delete(`http://localhost:3333/pages/${row.id}`)
+          .then(() => {
+            this.$message({
+              type: 'success',
+              message: 'Se ha eliminado correctamente',
+            })
+            this.tableData = this.tableData.filter((page) => page.id !== row.id)
+          })
+      })
     },
 
     async getPages() {
