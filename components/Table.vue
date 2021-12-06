@@ -17,27 +17,29 @@
         <template slot-scope="scope">
           <el-button
             v-if="type === 'available'"
-            size="mini"
+            icon="el-icon-delete"
+            size="medium"
             type="danger"
+            circle
             @click="handleDelete(scope.row)"
             >
-            Borrar
             </el-button>
           <el-button
             v-if="type === 'deleted'"
-            size="mini"
+            icon="el-icon-back"
+            size="medium"
             type="warning"
+            circle
             @click="handleRestore(scope.row)"
             >
-            Restaurar
             </el-button>
             <el-button
             v-if="type === 'deleted'"
-            size="mini"
-            type="danger"
+            icon="el-icon-delete-solid"
+            size="medium"
+            circle
             @click="handlePermanentDelete(scope.row)"
             >
-            Eliminar Permanentemente
             </el-button>
         </template>
       </el-table-column>
@@ -111,7 +113,6 @@ export default {
       this.tableData = await this.$axios.$get(`http://localhost:3333/pages/deleted`)
       this.tableData.deletedAt = moment.unix(this.tableData.deletedAt).format('dd.MM.yyyy')
     }
-
   }
 }
 </script>
@@ -124,7 +125,8 @@ export default {
 }
 
 .el-button {
-  margin: 0 auto;
-  display:block
+  margin: auto;
+
 }
+ 
 </style>
