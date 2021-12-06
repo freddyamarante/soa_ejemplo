@@ -18,6 +18,7 @@
       style="width: 100%"
     >
       <el-table-column label="ID" prop="id"> </el-table-column>
+      <el-table-column label="Icono" prop="icon"> </el-table-column>
       <el-table-column label="Pagina" prop="page_name"> </el-table-column>
       <el-table-column label="Tipo de contenido" prop="type_content">
       </el-table-column>
