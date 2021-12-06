@@ -155,7 +155,7 @@ export default {
 
     handlePermanentDelete(row) {
       this.$confirm(
-        '¿Estás seguro que deseas eliminar esta página?',
+        '¿Estás seguro que deseas eliminar esta página permanentemente?',
         'Warning',
         {
           confirmButtonText: 'Si',
@@ -164,7 +164,6 @@ export default {
         }
       ).then(() => {
         this.$axios.$delete(`http://localhost:3333/pages/permanent/${row.id}`)
-          .$delete(`http://localhost:3333/pages/${row.id}`)
           .then(() => {
             this.$message({
               type: 'success',
